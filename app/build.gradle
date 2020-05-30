@@ -1,0 +1,76 @@
+plugins {
+    id "com.google.protobuf" version "0.8.8"
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.beerfie.showeralarm"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.github.googleapis.gax-kotlin:kgax-grpc-android:master-SNAPSHOT'
+}
+repositories {
+    // jitpack releases are required until we start publishing to maven
+    maven { url 'https://jitpack.io' }
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.7.1'
+    }
+    plugins {
+        // For android projects, uncomment the lines below
+        javalite {
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+        client {
+            artifact = 'com.github.googleapis:gapic-generator-kotlin:master-SNAPSHOT:core@jar'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            // For android projects, uncomment the lines below
+            task.builtins {
+                remove java
+            }
+            task.plugins {
+                // For android projects, uncomment the lines below
+                javalite {}
+
+                // this generates your client library and helper Kotlin builders!
+                client {}
+            }
+        }
+    }
+}
