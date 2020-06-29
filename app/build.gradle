@@ -39,38 +39,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.github.googleapis.gax-kotlin:kgax-grpc-android:master-SNAPSHOT'
+    implementation files('libs\\ShowerAlarmGrpc.jar')
 }
 repositories {
     // jitpack releases are required until we start publishing to maven
     maven { url 'https://jitpack.io' }
-}
-
-protobuf {
-    protoc {
-        artifact = 'com.google.protobuf:protoc:3.7.1'
-    }
-    plugins {
-        // For android projects, uncomment the lines below
-        javalite {
-            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
-        }
-        client {
-            artifact = 'com.github.googleapis:gapic-generator-kotlin:master-SNAPSHOT:core@jar'
-        }
-    }
-    generateProtoTasks {
-        all().each { task ->
-            // For android projects, uncomment the lines below
-            task.builtins {
-                remove java
-            }
-            task.plugins {
-                // For android projects, uncomment the lines below
-                javalite {}
-
-                // this generates your client library and helper Kotlin builders!
-                client {}
-            }
-        }
-    }
 }
