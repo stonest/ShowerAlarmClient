@@ -39,6 +39,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.github.googleapis.gax-kotlin:kgax-grpc-android:master-SNAPSHOT'
+    implementation files('libs\\ShowerAlarmGrpc.jar')
 }
 repositories {
     // jitpack releases are required until we start publishing to maven
