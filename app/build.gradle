@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.beerfie.grpc:showeralarm:0.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
@@ -43,6 +43,14 @@ dependencies {
 repositories {
     // jitpack releases are required until we start publishing to maven
     maven { url 'https://jitpack.io' }
+    maven {
+        name = "GitHubPackages"
+        url = uri('https://maven.pkg.github.com/stonest/alarm-grpc')
+        credentials {
+            username = System.getenv("GH_USERNAME")
+            password = System.getenv("GH_TOKEN")
+        }
+    }
 }
 
 protobuf {
